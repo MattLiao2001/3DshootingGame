@@ -1,0 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class shield_rotate : MonoBehaviour
+{
+    GameObject target;
+    bool shieldONOFF;
+    public GameObject shield;
+    // Start is called before the first frame update
+    void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player");
+        shieldONOFF = GetComponentInParent<main_player>().shieldONOFF;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        shieldONOFF = GetComponentInParent<main_player>().shieldONOFF;
+        if (shieldONOFF == false)
+            shield.SetActive(false);
+        else
+        {
+            shield.SetActive(true);
+            transform.RotateAround(target.transform.position, new Vector3(0, 1, 0), 400f * Time.deltaTime);
+            var direction = target.transform.position - transform.position;
+            direction.y = 0;
+            direction = -transform.position;
+        }
+    }
+}
