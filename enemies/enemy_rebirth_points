@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class enemy_rebirth_point : MonoBehaviour
+{
+    public GameObject[] enemy;
+    public float rebirth_interval = 5;
+    int waves = 0;
+    float next_rebirth_time;
+    GameObject main_player;
+    // Start is called before the first frame update
+    void Start()
+    {
+        next_rebirth_time = Time.time + Random.Range(1, rebirth_interval);
+        main_player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Time.time >= next_rebirth_time && main_player.GetComponent<main_player>().blood_value > 0)
+        {
+
+            next_rebirth_time = Time.time + rebirth_interval;
+            for (int i = 0; i < 1 + Random.Range(0, 3); i++)
+            {
+                if (waves < 5)
+                    Instantiate(enemy[Random.Range(0, waves)], transform);
+                else
+                    Instantiate(enemy[Random.Range(0, 4)], transform);
+            }
+            waves++;
+            
+            }
+        }
+}
